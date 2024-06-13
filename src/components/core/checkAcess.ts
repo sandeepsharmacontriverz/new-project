@@ -1,7 +1,7 @@
 
   export const checkAcess = () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      window.location.href = "/login";
+    const token = typeof window !== "undefined" && window.localStorage.getItem("token");
+    if (!token && typeof window !== "undefined") {
+       window.location.href = "/login";
     }
   }
