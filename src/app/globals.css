@@ -31,3 +31,18 @@ body {
     text-wrap: balance;
   }
 }
+
+@keyframes modal-enter {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-modal-enter {
+  animation: modal-enter 0.3s ease-out forwards;
+}
