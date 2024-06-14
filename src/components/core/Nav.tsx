@@ -13,7 +13,7 @@ const Nav = () => {
         <p className="text-lg">Upload new CVs</p>
         <p className="font-light">10 tokens</p>
       </Link>
-      <button className="bg-white rounded-full px-4 py-5 text-black mr-14">
+      <button className="bg-white rounded-full w-28 h-28 text-black mr-14">
         Account icon
       </button>
     </nav>

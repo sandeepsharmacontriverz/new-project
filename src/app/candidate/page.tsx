@@ -1,6 +1,6 @@
 "use client";
-import { Modal } from "app/components/Modal";
-import Nav from "app/components/Nav";
+import { Modal } from "@components/core/Modal";
+import Nav from "@components/core/Nav";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -9,6 +9,7 @@ const page = () => {
   const [modalShow, setModalShow] = useState<string>("");
   const [desc, setDesc] = useState(false);
   const [cv, setCv] = useState(false);
+
   return (
     <>
       {modalShow === "description" ? (
@@ -34,7 +35,7 @@ const page = () => {
             <button
               className={`p-2 ${
                 desc
-                  ? "text-white bg-gradient-to-b from-[#077e1a]/10 to-[#077e1a]"
+                  ? "text-white bg-gradient-to-b from-[#077e1a]/30 to-[#077e1a]"
                   : "text-black bg-white"
               }  text-xl w-96 font-bold`}
               onClick={() => setModalShow("description")}
@@ -46,7 +47,7 @@ const page = () => {
             <button
               className={`p-6 ${
                 cv
-                  ? "text-white bg-gradient-to-b from-[#077e1a]/10 to-[#077e1a]"
+                  ? "text-white bg-gradient-to-b from-[#077e1a]/30 to-[#077e1a]"
                   : "text-black bg-white"
               } text-3xl w-96 font-bold`}
               onClick={() => setModalShow("cv")}

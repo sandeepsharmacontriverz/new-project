@@ -1,13 +1,40 @@
 "use client";
-import { Modal } from "app/components/Modal";
+import { Modal } from "../../components/core/Modal";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toasterError, toasterSuccess } from "@components/core/Toaster";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider, storage } from "../../utils/firebase";
 
 function App() {
   const [modalShow, setModalShow] = useState<string>("");
   const [desc, setDesc] = useState(false);
   const [cv, setCv] = useState(false);
+  const [user, setUser] = useState<any>();
   const router = useRouter();
+
+  const socialSignIn = async (e: any) => {
+    e.preventDefault();
+    try {
+      let userData: any = await signInWithPopup(auth, provider);
+
+      if (userData && userData.user) {
+        const mainFormData = {
+          firstname: userData.user?.displayName,
+          email: userData.user?.email,
+          mobilenumber: userData.user?.phoneNumber,
+        };
+        setUser(userData);
+        console.log(userData, "userData");
+        localStorage.setItem("token", userData.user?.accessToken);
+        toasterSuccess("Sign in successfully", 1000, userData?.id);
+      } else {
+        console.error("User or email is null");
+      }
+    } catch (error) {
+      toasterError(error, 3000, "id");
+    }
+  };
 
   return (
     <>
@@ -20,8 +47,17 @@ function App() {
       )}
       <div className="flex flex-col items-center justify-center h-screen bg-black">
         <div className="mt-6 text-end w-full">
-          <button className="bg-white rounded-full px-4 py-5 text-black mr-14">
-            Google sign
+          <button
+            className="bg-white rounded-full w-28 h-28 text-black mr-14"
+            onClick={socialSignIn}
+          >
+            {user && (
+              <img
+                src={user?.user?.photoURL}
+                className="w-28 h-28 rounded-full"
+              ></img>
+            )}
+            {!user && "Google sign"}
           </button>
         </div>
         <div className="w-full h-full flex flex-row">
@@ -34,7 +70,7 @@ function App() {
             <button
               className={`text-white p-6 ${
                 desc
-                  ? "bg-gradient-to-b from-[#077e1a]/10 to-[#077e1a]"
+                  ? "bg-gradient-to-b from-[#077e1a]/30 to-[#077e1a]"
                   : "bg-[#3a3a3a]"
               }  text-3xl w-96 font-bold`}
               onClick={() => setModalShow("description")}
@@ -44,7 +80,7 @@ function App() {
             <button
               className={`text-white p-6 ${
                 cv
-                  ? "bg-gradient-to-b from-[#077e1a]/10 to-[#077e1a]"
+                  ? "bg-gradient-to-b from-[#077e1a]/30 to-[#077e1a]"
                   : "bg-[#3a3a3a]"
               } text-3xl w-96 font-bold`}
               onClick={() => setModalShow("cv")}
