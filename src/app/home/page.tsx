@@ -1,7 +1,7 @@
 "use client";
 import { Modal } from "../../components/core/Modal";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toasterError, toasterSuccess } from "@components/core/Toaster";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider, storage } from "../../utils/firebase";
@@ -12,6 +12,19 @@ function App() {
   const [cv, setCv] = useState(false);
   const [user, setUser] = useState<any>();
   const router = useRouter();
+
+  useEffect(() => {
+    let userData: any =
+      typeof window !== "undefined" && window.localStorage.getItem("userData");
+
+    if (userData) {
+      setUser({
+        user: {
+          photoURL: userData,
+        },
+      });
+    }
+  }, []);
 
   const socialSignIn = async (e: any) => {
     e.preventDefault();
@@ -25,8 +38,9 @@ function App() {
           mobilenumber: userData.user?.phoneNumber,
         };
         setUser(userData);
-        console.log(userData, "userData");
+        // console.log(userData.user.photoURL, "userData");
         localStorage.setItem("token", userData.user?.accessToken);
+        localStorage.setItem("userData", userData.user?.photoURL);
         toasterSuccess("Sign in successfully", 1000, userData?.id);
       } else {
         console.error("User or email is null");

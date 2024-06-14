@@ -13,8 +13,31 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      placeholderColor: {
+        'transparent': 'transparent',
+      },
     },
   },
-  plugins: [],
+  variants: {
+    extend: {
+      placeholderOpacity: ['focus'],
+    },
+  },
+  plugins: [
+    function ({ addUtilities }: any) {
+      addUtilities({
+        '.placeholder-transparent': {
+          '::placeholder': {
+            opacity: '0',
+          },
+        },
+        '.placeholder-opacity-transition': {
+          '::placeholder': {
+            transition: 'opacity 0.3s ease',
+          },
+        },
+      }, ['responsive', 'focus']);
+    }
+  ],
 };
 export default config;

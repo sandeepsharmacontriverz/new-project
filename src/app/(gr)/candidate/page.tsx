@@ -19,8 +19,7 @@ const Candidate = () => {
       ) : (
         ""
       )}
-      <div className="flex flex-col items-center h-screen bg-black">
-        <Nav />
+      <div className="flex flex-col items-center h-full bg-black">
         <div className="mt-10 text-center">
           <p className="text-3xl font-medium">Add new candidates</p>
           <p className="text-sm mt-5">

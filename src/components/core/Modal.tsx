@@ -4,18 +4,16 @@ export const Modal = ({ type, setModalShow, fun }: any) => {
       <div className="bg-white w-2/5 h-3/5 flex flex-col p-10 justify-center items-center transform transition-transform duration-300 ease-out scale-100 opacity-100 animate-modal-enter">
         {type === "description" ? (
           <textarea
-            className="h-full w-full text-black mb-7 text-lg"
+            className="h-full w-full text-black mb-7 text-lg placeholder-opacity-transition focus:placeholder-transparent p-2"
             placeholder="Insert your job description here. you don't need to worry about the layout or structure. Just include the essence of the job, tasks, deliverables, requirements, qualifications, skills, etc."
           ></textarea>
         ) : (
           <div className="h-full flex items-center">
             <input
               type="file"
+              multiple
               className="border-2 border-black rounded-md text-black p-2 text-lg"
             />
-            {/* <button className="border-2 border-black rounded-md text-black p-2 text-lg">
-              Open files
-            </button> */}
           </div>
         )}
         <div className="flex gap-6">

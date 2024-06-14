@@ -1,11 +1,11 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, provider, storage } from '../utils/firebase';
-import { useEffect, useState } from 'react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { toasterError, toasterSuccess } from '../components/core/Toaster';
+import { useRouter } from "next/navigation";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider, storage } from "../utils/firebase";
+import { useEffect, useState } from "react";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { toasterError, toasterSuccess } from "../components/core/Toaster";
 
 export default function Home() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function Home() {
     e.preventDefault();
     try {
       let userData: any = await signInWithPopup(auth, provider);
-      
+
       if (userData && userData.user) {
         const mainFormData = {
           firstname: userData.user?.displayName,
@@ -35,24 +35,40 @@ export default function Home() {
   const handleFileUpload = async (files: FileList) => {
     const file = files[0]; // Assuming we handle one file at a time for simplicity
     const storageRef = ref(storage, `uploads/${file.name}`);
-    
+
     try {
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
-      
+
       // Example of using the downloadURL or storing it in Firestore
-      console.log(downloadURL);
+      // console.log(downloadURL);
       toasterSuccess("File uploaded successfully!", 3000, "id");
-    } catch (error:any) {
+    } catch (error: any) {
       toasterError(error.message, 3000, "id");
     }
   };
 
   return (
     <div className="mt-10 text-center font-bold text-2xl">
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={socialSignIn}>Sign in with Google</button><br />
-      <button className="mt-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setOpen(true)}>Upload File</button>
-      {open && <EditPopup onClose={() => setOpen(false)} handleFileUpload={handleFileUpload} />}
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={socialSignIn}
+      >
+        Sign in with Google
+      </button>
+      <br />
+      <button
+        className="mt-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => setOpen(true)}
+      >
+        Upload File
+      </button>
+      {open && (
+        <EditPopup
+          onClose={() => setOpen(false)}
+          handleFileUpload={handleFileUpload}
+        />
+      )}
     </div>
   );
 }
@@ -75,7 +91,10 @@ const EditPopup: React.FC<EditPopupProps> = ({ onClose, handleFileUpload }) => {
       <div className="bg-white border w-auto py-3 px-5 border-gray-300 shadow-lg rounded-md">
         <div className="flex justify-between">
           <h3>Upload File</h3>
-          <span onClick={onClose} className="cursor-pointer transition duration-300 hover:text-black-500">
+          <span
+            onClick={onClose}
+            className="cursor-pointer transition duration-300 hover:text-black-500"
+          >
             &times;
           </span>
         </div>
