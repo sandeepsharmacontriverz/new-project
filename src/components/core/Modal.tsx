@@ -20,7 +20,7 @@ export const Modal = ({ type, setModalShow, fun }: any) => {
         )}
         <div className="flex gap-6">
           <button
-            className="bg-black text-3xl py-3 w-44"
+            className="bg-black text-3xl py-3 w-44 text-white"
             onClick={() => {
               fun(true);
               setModalShow("");
@@ -29,7 +29,7 @@ export const Modal = ({ type, setModalShow, fun }: any) => {
             {type === "description" ? "Confirm" : "OK"}
           </button>
           <button
-            className="bg-black/60 text-3xl py-3 w-44"
+            className="bg-black/60 text-3xl py-3 w-44 text-white"
             onClick={() => setModalShow("")}
           >
             Cancel
