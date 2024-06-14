@@ -41,7 +41,7 @@ export default function Home() {
       const downloadURL = await getDownloadURL(storageRef);
       
       // Example of using the downloadURL or storing it in Firestore
-      console.log(downloadURL);
+      // console.log(downloadURL);
       toasterSuccess("File uploaded successfully!", 3000, "id");
     } catch (error:any) {
       toasterError(error.message, 3000, "id");
