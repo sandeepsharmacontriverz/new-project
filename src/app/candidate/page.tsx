@@ -4,7 +4,7 @@ import Nav from "@components/core/Nav";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const page = () => {
+const Candidate = () => {
   const router = useRouter();
   const [modalShow, setModalShow] = useState<string>("");
   const [desc, setDesc] = useState(false);
@@ -68,4 +68,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Candidate;

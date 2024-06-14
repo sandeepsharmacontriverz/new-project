@@ -1,6 +1,6 @@
 import Nav from "@components/core/Nav";
 
-const page = () => {
+const Data = () => {
   return (
     <div className="flex flex-col items-center h-screen bg-black">
       <Nav />
@@ -8,4 +8,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Data;

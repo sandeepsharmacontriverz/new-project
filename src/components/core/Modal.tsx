@@ -9,9 +9,13 @@ export const Modal = ({ type, setModalShow, fun }: any) => {
           ></textarea>
         ) : (
           <div className="h-full flex items-center">
-            <button className="border-2 border-black rounded-md text-black p-2 text-lg">
+            <input
+              type="file"
+              className="border-2 border-black rounded-md text-black p-2 text-lg"
+            />
+            {/* <button className="border-2 border-black rounded-md text-black p-2 text-lg">
               Open files
-            </button>
+            </button> */}
           </div>
         )}
         <div className="flex gap-6">

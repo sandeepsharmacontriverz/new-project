@@ -1,4 +1,4 @@
-export default function () {
+export default function Loading() {
   return (
     <div className="text-center w-full min-h-screen flex justify-center items-center">
       <div role="status">
