@@ -21,8 +21,8 @@ const Candidate = () => {
       )}
       <div className="flex flex-col items-center h-full bg-black">
         <div className="mt-10 text-center">
-          <p className="text-3xl font-medium">Add new candidates</p>
-          <p className="text-sm mt-5">
+          <p className="text-3xl font-medium text-white">Add new candidates</p>
+          <p className="text-sm mt-5 text-white">
             Choose a role for CV evaluation from current jobs:
           </p>
           <select className="text-black p-3 px-6 cursor-pointer rounded-lg w-60">

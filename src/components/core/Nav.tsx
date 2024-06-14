@@ -6,7 +6,7 @@ const Nav = () => {
     typeof window !== "undefined" && window.localStorage.getItem("userData");
   return (
     <nav className="flex flex-row gap-5 mt-6 justify-end w-full items-center">
-      <Link href="/home" className="bg-white/20 p-4 px-6 font-medium">
+      <Link href="/home" className="text-white bg-white/20 p-4 px-6 font-medium">
         Home
       </Link>
       <Link

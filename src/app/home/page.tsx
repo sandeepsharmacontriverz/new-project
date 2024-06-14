@@ -76,7 +76,7 @@ function App() {
         </div>
         <div className="w-full h-full flex flex-row">
           <div className="w-1/2 h-full flex items-center justify-center ml-40">
-            <h1 className="text-5xl font-bold mx-32">
+            <h1 className="text-5xl font-bold mx-32 text-white">
               Evaluate a CV of a candidate with AI
             </h1>
           </div>
