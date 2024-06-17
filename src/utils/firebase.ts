@@ -1,5 +1,3 @@
-
-
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -8,6 +6,7 @@ import {
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 import 'firebase/firestore';
+
 
 
 // const firebaseConfig = {
@@ -21,12 +20,12 @@ import 'firebase/firestore';
 // };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCy-euQc_Ovgkk_LY4GspL6x-BHmblXzhg",
-  authDomain: "dlaller1988-31279.firebaseapp.com",
-  projectId: "dlaller1988-31279",
-  storageBucket: "dlaller1988-31279.appspot.com",
-  messagingSenderId: "774150656757",
-  appId: "1:774150656757:web:3ffd8c5f01a37b165fabbc"
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID
 };
 
 
