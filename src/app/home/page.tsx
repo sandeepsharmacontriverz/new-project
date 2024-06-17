@@ -2,11 +2,13 @@
 import { Modal } from "../../components/core/Modal";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import MiniLoader from "@components/core/MiniLoader";
 
 function App() {
   const [modalShow, setModalShow] = useState<string>("");
   const [desc, setDesc] = useState(false);
   const [cv, setCv] = useState(false);
+  const [load, setLoad] = useState(false);
   const router = useRouter();
 
   return (
@@ -21,7 +23,7 @@ function App() {
       <div className="flex flex-col items-center justify-center h-full mt-24">
         <div className="h-full flex flex-col md:flex-row mx-24 md:mx-88">
           <div className="w-full h-full flex items-center justify-center m-auto">
-            <h1 className="text-6xl font-extrabold text-black pl-20">
+            <h1 className="text-5xl font-extrabold text-black pl-20">
               Evaluate a CV of a candidate with AI
             </h1>
           </div>
@@ -42,13 +44,19 @@ function App() {
             >
               {cv ? "CVs Uploaded!" : "Upload some CV"}
             </button>
-            <button
-              className="text-white p-4 bg-[#78909c] text-2xl font-semibold w-96 rounded-xl"
-              onClick={() => router.push("/all-candidate")}
-            >
-              <p>Analyze</p>
-              <p>(10 tokens)</p>
-            </button>
+            {load ? (
+              <div className="h-24">
+                <MiniLoader />
+              </div>
+            ) : (
+              <button
+                className="text-white p-4 bg-[#78909c] text-2xl font-semibold w-96 rounded-xl"
+                onClick={() => router.push("/all-candidate")}
+              >
+                <p>Analyze</p>
+                <p>(10 tokens)</p>
+              </button>
+            )}
           </div>
         </div>
       </div>

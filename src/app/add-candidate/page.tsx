@@ -1,4 +1,5 @@
 "use client";
+import MiniLoader from "@components/core/MiniLoader";
 import { Modal } from "@components/core/Modal";
 import Nav from "@components/core/Nav";
 import { useRouter } from "next/navigation";
@@ -9,6 +10,7 @@ const AllCandidate = () => {
   const [modalShow, setModalShow] = useState<string>("");
   const [desc, setDesc] = useState(false);
   const [cv, setCv] = useState(false);
+  const [load, setLoad] = useState(false);
 
   return (
     <>
@@ -21,15 +23,17 @@ const AllCandidate = () => {
       )}
       <div className="flex flex-col items-center h-full">
         <div className="mt-14 text-center">
-          <p className="text-7xl font-bold text-black">Add new candidates</p>
+          <p className="text-6xl font-bold text-black">Add new candidates</p>
           <p className="text-lg mt-14 mb-6 text-black font-bold">
             Choose a role for CV evaluation from current jobs:
           </p>
+
           <select className="text-white p-3 px-6 cursor-pointer rounded-lg w-96 text-lg font-semibold bg-black">
             <option>Dummy Role 1</option>
             <option>Product Manager</option>
             <option>IT Staff</option>
           </select>
+
           <div className="flex flex-col gap-5 mt-5 items-center">
             <div className="flex items-center gap-2 text-lg font-bold mr-12">
               <span>...OR</span>
@@ -42,6 +46,7 @@ const AllCandidate = () => {
                 {desc ? "New Job Description Pasted!" : "Paste Job Description"}
               </button>
             </div>
+
             <button
               className={`p-6 rounded-lg ${
                 cv ? "bg-[#b0c4de] text-black" : "bg-[#222831] text-white"
@@ -51,13 +56,20 @@ const AllCandidate = () => {
               {cv ? "CVs Uploaded!" : "Upload new CVs"}
             </button>
           </div>
-          <button
-            className="text-white p-4 bg-[#78909c] font-semibold w-96 mt-20 rounded-lg"
-            onClick={() => router.push("/all-candidate")}
-          >
-            <p className="text-xl">Analyze CVs</p>
-            <p className="text-sm">(10 tokens)</p>
-          </button>
+
+          {load ? (
+            <div className="mt-24">
+              <MiniLoader />
+            </div>
+          ) : (
+            <button
+              className="text-white p-4 bg-[#78909c] font-semibold w-96 mt-20 rounded-lg"
+              onClick={() => router.push("/all-candidate")}
+            >
+              <p className="text-xl">Analyze CVs</p>
+              <p className="text-sm">(10 tokens)</p>
+            </button>
+          )}
         </div>
       </div>
     </>

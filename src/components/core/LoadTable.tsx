@@ -1,8 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tables from "./Tables";
 
 export const LoadTable = ({ type }: any) => {
+  const [show, setShow] = useState(false);
+  const [data, setData] = useState([]);
+
   const data1 = [
     {
       id: 1,
@@ -95,13 +98,18 @@ export const LoadTable = ({ type }: any) => {
     },
   ];
 
-  const [data, setData] = useState([]);
+  useEffect(() => {
+    setShow(true);
+  });
+
   return (
     <div className="w-[80vw] rounded-xl">
-      <Tables
-        data={type == "1" ? data1 : data2}
-        columns={type == "1" ? columns1 : columns2}
-      />
+      {show && (
+        <Tables
+          data={type == "1" ? data1 : data2}
+          columns={type == "1" ? columns1 : columns2}
+        />
+      )}
     </div>
   );
 };
