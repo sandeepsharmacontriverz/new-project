@@ -19,11 +19,11 @@ export default function RootLayout({
 }>) {
   checkAcess();
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={inter.className}>
+      <body>
         {children}
         <ToastProvider />
-        </body>
+      </body>
     </html>
   );
 }

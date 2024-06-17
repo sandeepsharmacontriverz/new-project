@@ -1,6 +1,15 @@
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export default function Loading() {
   return (
-    <div className="text-center w-full min-h-screen flex justify-center items-center">
+    <div
+      className={`text-center w-full min-h-screen flex justify-center items-center ${montserrat.className}`}
+    >
       <div role="status">
         <svg
           aria-hidden="true"

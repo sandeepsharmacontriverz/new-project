@@ -6,7 +6,7 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
-    <div className="bg-black">
+    <div>
       <Nav />
       {children}
     </div>

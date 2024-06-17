@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { toasterError, toasterSuccess } from "@components/core/Toaster";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider, storage } from "../../utils/firebase";
+import { FcGoogle } from "react-icons/fc";
 
 function App() {
   const [modalShow, setModalShow] = useState<string>("");
@@ -59,51 +60,65 @@ function App() {
       ) : (
         ""
       )}
-      <div className="flex flex-col items-center justify-center h-screen bg-black">
-        <div className="mt-6 text-end w-full">
-          <button
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="mt-6 flex justify-end w-full">
+          {/* <button
             className="bg-white rounded-full w-28 h-28 text-black mr-14"
             onClick={socialSignIn}
           >
-            {user && (
+            {user ? (
               <img
                 src={user?.user?.photoURL}
                 className="w-28 h-28 rounded-full"
               ></img>
             )}
             {!user && "Google sign"}
-          </button>
+          </button> */}
+          {user ? (
+            <img
+              src={user?.user?.photoURL}
+              className="bg-white rounded-full w-28 h-28 text-black mr-14"
+              alt="Account icon"
+            />
+          ) : (
+            <FcGoogle
+              className="rounded-full w-28 h-28 text-black mr-14 p-8 cursor-pointer"
+              onClick={socialSignIn}
+            />
+            // <img
+            //   src="/user.png"
+            //   onClick={socialSignIn}
+            //   className="bg-white rounded-full w-28 h-28 text-black mr-14"
+            //   alt="User icon"
+            // />
+          )}
         </div>
-        <div className="w-full h-full flex flex-row">
-          <div className="w-1/2 h-full flex items-center justify-center ml-40">
-            <h1 className="text-5xl font-bold mx-32 text-white">
+        <div className="h-full flex flex-col md:flex-row mx-24 md:mx-88">
+          <div className="w-full h-full flex items-center justify-center">
+            <h1 className="text-6xl font-extrabold text-black pl-20">
               Evaluate a CV of a candidate with AI
             </h1>
           </div>
-          <div className="w-1/2 h-full flex flex-col gap-14 items-center justify-center mr-40">
+          <div className="w-full h-full flex flex-col gap-14 items-center justify-center">
             <button
               className={`text-white p-6 ${
-                desc
-                  ? "bg-gradient-to-b from-[#077e1a]/30 to-[#077e1a]"
-                  : "bg-[#3a3a3a]"
-              }  text-3xl w-96 font-bold`}
+                desc ? "bg-[#b0c4de]" : "bg-[#222831]"
+              } text-3xl w-96 font-bold rounded-xl`}
               onClick={() => setModalShow("description")}
             >
               {desc ? "Job Description Pasted!" : "Paste your job description"}
             </button>
             <button
               className={`text-white p-6 ${
-                cv
-                  ? "bg-gradient-to-b from-[#077e1a]/30 to-[#077e1a]"
-                  : "bg-[#3a3a3a]"
-              } text-3xl w-96 font-bold`}
+                cv ? "bg-[#b0c4de]" : "bg-[#222831]"
+              } text-3xl w-96 font-bold rounded-xl`}
               onClick={() => setModalShow("cv")}
             >
               {cv ? "CVs Uploaded!" : "Upload some CV"}
             </button>
             <button
-              className="text-white p-4 bg-[#077e1a] text-2xl font-semibold w-96"
-              onClick={() => router.push("/data")}
+              className="text-white p-4 bg-[#78909c] text-2xl font-semibold w-96 rounded-xl"
+              onClick={() => router.push("/all-candidate")}
             >
               <p>Analyze</p>
               <p>(10 tokens)</p>
