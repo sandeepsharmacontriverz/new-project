@@ -4,6 +4,7 @@ import "./globals.css";
 import ToastProvider from "../lib/ToastProvider";
 import { useEffect } from "react";
 import { checkAcess } from "@components/core/checkAcess";
+import Nav from "@components/core/Nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body>
+        <Nav />
         {children}
         <ToastProvider />
       </body>

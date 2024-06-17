@@ -1,12 +1,4 @@
-"use client";
-// import Tables from "@components/core/Tables";
-import Loading from "app/loading";
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
-
-const DynamicTables = dynamic(() => import("@components/core/Tables"), {
-  loading: () => <Loading />,
-});
+import { LoadTable } from "@components/core/LoadTable";
 
 const AllCandidates = () => {
   let data = [
@@ -53,18 +45,9 @@ const AllCandidates = () => {
         Candidates for role ML engineer
       </p>
       <p className="text-xl mt-10 mb-6 text-black font-bold">Recommended</p>
-
-      <div className="w-[80vw] rounded-xl">
-        <Suspense fallback={<Loading />}>
-          <DynamicTables />
-          {/* <Tables /> */}
-        </Suspense>
-      </div>
+      <LoadTable type="1" />
       <p className="text-xl mt-10 mb-6 text-black font-bold">Not recommended</p>
-      <div className="w-[80vw] rounded-xl">
-        <DynamicTables />
-        {/* <Tables /> */}
-      </div>
+      <LoadTable type="1" />
     </div>
   );
 };
