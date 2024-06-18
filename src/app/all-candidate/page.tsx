@@ -1,43 +1,6 @@
 import { LoadTable } from "@components/core/LoadTable";
 
 const AllCandidates = () => {
-  let data = [
-    {
-      id: 1000,
-      name: "James Butt",
-      country: {
-        name: "Algeria",
-        code: "dz",
-      },
-      company: "Benton, John B Jr",
-      date: "2015-09-13",
-      status: "unqualified",
-      verified: true,
-      activity: 17,
-      representative: {
-        name: "Ioni Bowcher",
-        image: "ionibowcher.png",
-      },
-      balance: 70663,
-    },
-    {
-      id: 100,
-      name: "Demo",
-      country: {
-        name: "India",
-        code: "in",
-      },
-      company: "Test company",
-      date: "2024-06-14",
-      status: "qualified",
-      verified: true,
-      activity: 25,
-      representative: {
-        name: "NO body",
-      },
-      balance: 200,
-    },
-  ];
 
   return (
     <div className="flex flex-col items-center">

@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { usePathname } from "next/navigation";
-import { signInWithPopup } from "firebase/auth";
-import { auth, provider, storage } from "../../utils/firebase";
-import { toasterError, toasterSuccess } from "@components/core/Toaster";
+import useSocialSignIn from "@hooks/useSocialSignIn";
+
 
 const Nav = () => {
-  const [userData, setUserData] = useState<any>(null);
   const pathname = usePathname();
+  const { userData,setUserData, error, loading, socialSignIn } = useSocialSignIn();
+
 
   useEffect(() => {
     const storedUserData = window.localStorage.getItem("userData");
@@ -18,23 +18,7 @@ const Nav = () => {
     }
   }, []);
 
-  const socialSignIn = async (e: any) => {
-    e.preventDefault();
-    try {
-      let userData: any = await signInWithPopup(auth, provider);
-
-      if (userData && userData.user) {
-        setUserData(userData);
-        localStorage.setItem("token", userData.user?.accessToken);
-        localStorage.setItem("userData", JSON.stringify(userData));
-        toasterSuccess("Sign in successfully", 1000, userData?.id);
-      } else {
-        console.error("User or email is null");
-      }
-    } catch (error) {
-      toasterError(error, 3000, "id");
-    }
-  };
+ 
 
   return (
     <nav className="flex flex-row gap-14 mt-4 justify-end w-full items-center">

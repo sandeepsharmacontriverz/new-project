@@ -1,22 +1,111 @@
 "use client";
 import { Modal } from "../../components/core/Modal";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MiniLoader from "@components/core/MiniLoader";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {storage} from "../../utils/firebase";
+import useSocialSignIn from "@hooks/useSocialSignIn";
+import { toasterError, toasterSuccess } from '@components/core/Toaster';
+
+interface FormData {
+  firebase_admin_name: string;
+  user_email: string;
+  job_description: string;
+  cv_pdf_bucket_paths_list: string[]; // Specify the type as string[]
+}
 
 function App() {
+  const router = useRouter();
+  const { userData,setUserData, error, loading, socialSignIn } = useSocialSignIn();
   const [modalShow, setModalShow] = useState<string>("");
   const [desc, setDesc] = useState(false);
   const [cv, setCv] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    firebase_admin_name: "",
+    user_email: "",
+    job_description: "",
+    cv_pdf_bucket_paths_list: [],
+  });
   const [load, setLoad] = useState(false);
-  const router = useRouter();
 
+  useEffect(() => {
+    if (userData) {
+      setFormData({
+        ...formData,
+        firebase_admin_name: "dlaller1988-31279",
+        user_email: userData?.email
+      });
+    }
+  },[userData]);
+
+  const handleChange = async (event: any) => {
+    if (event?.target?.name === "job_description") {
+      setFormData({
+        ...formData,
+        [event?.target?.name]: event?.target?.value,
+      });
+    } else {
+      if (!event.target.files) return;
+      const files = Array.from(event.target.files);
+      
+      const fileUploadPromises = files.map((file:any) => {
+        const storageRef = ref(storage, `files/${file.name}`);
+        return uploadBytes(storageRef, file)
+          .then(snapshot => getDownloadURL(snapshot.ref));
+      });
+
+      try {
+        const fileURLs = await Promise.all(fileUploadPromises);
+        setFormData({
+          ...formData,
+          cv_pdf_bucket_paths_list: fileURLs,
+        });
+        console.log('Files uploaded and URLs stored:', fileURLs);
+      } catch (error) {
+        console.error('Error uploading files:', error);
+      }
+    }
+  };
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
+    if (formData.job_description === "") {
+      toasterError("Please Enter Job Description", 3000, "id")
+      return
+    } else if (formData.cv_pdf_bucket_paths_list.length === 0) {
+      toasterError("Please upload atleast one CV", 3000, "id")
+      return
+    } else if (!userData) {
+      window.localStorage.setItem("formData",JSON.stringify(formData))
+      await socialSignIn();
+    }
+
+    setLoad(true);
+    await fetch("http://35.245.104.14:8004/analyze_CVs", {
+      method: "POST",
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLoad(false);
+        router.push("/all-candidate")
+        console.log(data)
+      }).catch((err) => {
+        console.log(err)
+      })
+    };
   return (
     <>
       {modalShow === "description" ? (
-        <Modal type="description" setModalShow={setModalShow} fun={setDesc} />
+        <Modal type="description" formData={formData} handleChange={handleChange} setModalShow={setModalShow} fun={setDesc} />
       ) : modalShow === "cv" ? (
-        <Modal type="cv" setModalShow={setModalShow} fun={setCv} />
+        <Modal type="cv" formData={formData} handleChange={handleChange} setModalShow={setModalShow} fun={setCv} />
       ) : (
         ""
       )}
@@ -51,7 +140,7 @@ function App() {
             ) : (
               <button
                 className="text-white p-4 bg-[#78909c] text-2xl font-semibold w-96 rounded-xl"
-                onClick={() => router.push("/all-candidate")}
+                onClick={handleSubmit}
               >
                 <p>Analyze</p>
                 <p>(10 tokens)</p>

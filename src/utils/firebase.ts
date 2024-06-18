@@ -9,7 +9,6 @@ import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 import 'firebase/firestore';
 
-
 // const firebaseConfig = {
 //   apiKey: "AIzaSyB3FJuHX3TG4emsEYIcBeXhSeFUAdxKeMM",
 //   authDomain: "e-commerce-13b4e.firebaseapp.com",
@@ -36,6 +35,7 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const storage = getStorage(app);
 const firestore = getFirestore(app);
+
 
 googleProvider.setCustomParameters({
   prompt: 'select_account'
